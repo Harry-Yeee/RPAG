@@ -1,6 +1,6 @@
-package com.example.rpag;
+package com.example.javaClasses;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class Category {
     private String Name;

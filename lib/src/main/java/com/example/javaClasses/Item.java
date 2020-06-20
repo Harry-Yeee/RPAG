@@ -1,4 +1,4 @@
-package com.example.rpag;
+package com.example.javaClasses;
 
 public class Item {
 
