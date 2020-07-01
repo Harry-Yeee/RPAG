@@ -19,4 +19,5 @@
 
     <!-- Manage page string source -->
     <string name="manageButtonText">Manage</string>
+    <string name="title_manage_activity">Manage Page</string>
 </resources>
