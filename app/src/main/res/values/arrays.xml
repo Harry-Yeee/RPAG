@@ -9,4 +9,17 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <string-array name="category_arrays">
+        <item>Hosuing</item>
+        <item>Transportation</item>
+        <item>Food</item>
+        <item>Utilities</item>
+        <item>Healthcare</item>
+        <item>Insurance</item>
+        <item>Saving, Invest, Loan</item>
+        <item>Entertainment</item>
+        <item>Personal Spending</item>
+        <item>Miscellaneous</item>
+    </string-array>
 </resources>
