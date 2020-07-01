@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">RPAG</string>
+    <string name="category_prompt">Choose a category</string>
+
+    <string-array name="category_arrays">
+        <item>Hosuing</item>
+        <item>Transportation</item>
+        <item>Food</item>
+        <item>Utilities</item>
+        <item>Healthcare</item>
+        <item>Insurance</item>
+        <item>Saving, Invest, Loan</item>
+        <item>Entertainment</item>
+        <item>Personal Spending</item>
+        <item>Miscellaneous</item>
+    </string-array>
+
 </resources>

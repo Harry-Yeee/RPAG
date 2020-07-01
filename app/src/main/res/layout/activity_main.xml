@@ -62,17 +62,19 @@
     android:layout_toRightOf="@+id/textView3"
     android:layout_toEndOf="@+id/textView3" />
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Add Data"
-    android:id="@+id/button_add"
-    android:layout_below="@+id/editText_date"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="76dp" />
+    <Button
+        android:id="@+id/button_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_date"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="122dp"
+        android:text="Add Data" />
 
-<Button
+    <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="View All"
@@ -126,5 +128,18 @@
         android:layout_below="@+id/button_update"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_id"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="18dp"
+        android:entries="@array/category_arrays"
+        android:prompt="@string/category_prompt" />
 
 </RelativeLayout>

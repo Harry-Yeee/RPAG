@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.database.Cursor;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Spinner;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAddData;
     Button btnviewAll;
     Button btnDelete;
+    Spinner spinner1;
 
     Button btnviewUpdate;
     @Override
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btnviewAll = (Button)findViewById(R.id.button_viewAll);
         btnviewUpdate= (Button)findViewById(R.id.button_update);
         btnDelete= (Button)findViewById(R.id.button_delete);
+        spinner1 = findViewById(R.id.spinner1);
         AddData();
         viewAll();
         UpdateData();
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     public void DeleteData() {
         btnDelete.setOnClickListener(
                 new View.OnClickListener() {
@@ -77,13 +81,14 @@ public class MainActivity extends AppCompatActivity {
         );
     }
     public  void AddData() {
+        spinner1 = (Spinner) findViewById(R.id.spinner1);
         btnAddData.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         boolean isInserted = myDb.insertData(editName.getText().toString(),
                                 Double.parseDouble(editPrice.getText().toString()),
-                                editDate.getText().toString() );
+                                editDate.getText().toString(),String.valueOf(spinner1.getSelectedItem()) );
                         if(isInserted == true)
                             Toast.makeText(MainActivity.this,"Data Inserted",Toast.LENGTH_LONG).show();
                         else
