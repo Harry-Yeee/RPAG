@@ -3,10 +3,10 @@ package com.example.rpag;
 public class Item {
     private String itemName;
     private double itemPrice;
-    private double itemDate;
+    private int itemDate;
     private int id;
 
-    public Item(String itemName, double itemPrice, double itemDate, int id) {
+    public Item(String itemName, double itemPrice, int itemDate, int id) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemDate = itemDate;
@@ -32,11 +32,11 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
-    public double getItemDate() {
+    public int getItemDate() {
         return itemDate;
     }
 
-    public void setItemDate(double itemDate) {
+    public void setItemDate(int itemDate) {
         this.itemDate = itemDate;
     }
 
@@ -50,11 +50,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "item{" +
-                "itemName='" + itemName + '\'' +
-                ", itemPrice=" + itemPrice +
-                ", itemDate=" + itemDate +
-                ", id=" + id +
-                '}';
+        return "ID: "+ id + " " + itemName + " $ " + itemPrice + " Month: " + itemDate;
     }
 }

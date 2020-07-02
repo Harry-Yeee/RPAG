@@ -2,10 +2,14 @@ package com.example.rpag;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String ITEM_TABLE = "ITEM_TABLE";
@@ -21,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createTable = "CREATE TABLE " + ITEM_TABLE + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ITEM_NAME + " TEXT, " + ITEM_DATE + " DOUBLE, "  + ITEM_PRICE + " DOUBLE)";
+                ITEM_NAME + " TEXT, " + ITEM_DATE + " INT, "  + ITEM_PRICE + " DOUBLE)";
         sqLiteDatabase.execSQL(createTable);
     }
 
@@ -44,5 +48,46 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+
+    public List<Item> viewData(){
+        List<Item> itemList = new ArrayList<>();
+
+        String queryString = "SELECT * FROM " + ITEM_TABLE;
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int itemID = cursor.getInt(0);
+                String itemName = cursor.getString(1);
+                int itemDate = cursor.getInt(2);
+                double itemPrice = cursor.getDouble(3);
+
+                Item temp = new Item(itemName, itemPrice, itemDate, itemID);
+                itemList.add(temp);
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+        return itemList;
+    }
+
+    public boolean deleteData(Item item){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + ITEM_TABLE + " WHERE " + ID + " = " + item.getId();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+
+
     }
 }
