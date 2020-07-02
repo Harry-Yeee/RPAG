@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editName, editPrice, editDate,editTextId;
     Button btnAddData;
     Button btnviewAll;
+    Button btnviewSingle;
     Button btnDelete;
     Spinner spinner1;
 
@@ -33,11 +34,13 @@ public class MainActivity extends AppCompatActivity {
         editTextId = (EditText)findViewById(R.id.editText_id);
         btnAddData = (Button)findViewById(R.id.button_add);
         btnviewAll = (Button)findViewById(R.id.button_viewAll);
+        btnviewSingle = (Button)findViewById(R.id.button_viewSingle);
         btnviewUpdate= (Button)findViewById(R.id.button_update);
         btnDelete= (Button)findViewById(R.id.button_delete);
         spinner1 = findViewById(R.id.spinner1);
         AddData();
         viewAll();
+        viewSingle();
         UpdateData();
         DeleteData();
         Button openBudget = (Button)findViewById(R.id.budgetInterface_btn);
@@ -71,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         boolean isUpdate = myDb.updateData(editTextId.getText().toString(),
                                 editName.getText().toString(),
-                                Double.parseDouble(editPrice.getText().toString()), editDate.getText().toString());
+                                Double.parseDouble(editPrice.getText().toString()), editDate.getText().toString(),
+                                String.valueOf(spinner1.getSelectedItem()));
                         if(isUpdate == true)
                             Toast.makeText(MainActivity.this,"Data Update",Toast.LENGTH_LONG).show();
                         else
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Cursor res = myDb.getAllData();
+                        Cursor res = myDb.getAllData(String.valueOf(spinner1.getSelectedItem()));
                         if(res.getCount() == 0) {
                             // show message
                             showMessage("Error","Nothing found");
@@ -117,6 +121,39 @@ public class MainActivity extends AppCompatActivity {
                             buffer.append("Price :"+ res.getString(2)+"\n");
                             buffer.append("Date :"+ res.getString(3)+"\n\n");
                         }
+
+                        // Show all data
+                        showMessage("Data",buffer.toString());
+                    }
+                }
+        );
+    }
+
+    public void viewSingle() {
+        btnviewSingle.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(editTextId.getText().toString().isEmpty())
+                        {
+                            // show message
+                            showMessage("Error","No Input ID");
+                            return;
+                        }
+                        Cursor res = myDb.getDatabyId(editTextId.getText().toString(),String.valueOf(spinner1.getSelectedItem()));
+                        if(res.getCount() == 0) {
+                            // show message
+                            showMessage("Error","ID not found");
+                            return;
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        res.moveToFirst();
+                        buffer.append("Id :" + res.getString(0) + "\n");
+                        buffer.append("Name :" + res.getString(1) + "\n");
+                        buffer.append("Price :" + res.getString(2) + "\n");
+                        buffer.append("Date :" + res.getString(3) + "\n\n");
+
 
                         // Show all data
                         showMessage("Data",buffer.toString());

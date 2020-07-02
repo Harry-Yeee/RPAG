@@ -112,20 +112,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public Cursor getAllData() {
+    public Cursor getAllData(String category) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from "+ HOUSING,null);
+        Cursor res = db.rawQuery("select * from "+ tableMatcher(category),null);
         return res;
     }
 
-    public boolean updateData(String id,String name,Double price,String date) {
+    public Cursor getDatabyId(String id, String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from "+ tableMatcher(category) + " WHERE " + COL_1 + "=" + id,null);
+        return res;
+    }
+
+    public boolean updateData(String id,String name,Double price,String date, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1,id);
         contentValues.put(COL_2,name);
         contentValues.put(COL_3,price);
         contentValues.put(COL_4,date);
-        db.update(HOUSING, contentValues, "ID = ?",new String[] { id });
+        db.update(tableMatcher(category), contentValues, "ID = ?",new String[] { id });
         return true;
     }
 
