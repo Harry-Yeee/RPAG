@@ -42,7 +42,7 @@ public class pieChart extends AppCompatActivity {
         pieChart.setData(pieData);
         pieChart.setCenterText("Categories");
         pieChart.getDescription().setEnabled(false);
-        pieChart.animate();
+        pieChart.animateX(2000);
 
     }
 }
