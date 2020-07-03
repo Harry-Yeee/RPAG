@@ -15,9 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class manualAdd extends AppCompatActivity {
     EditText itemNameText, itemPriceText;
     Button addDataBtn, viewDataBtn, removeDataBtn;
-    Spinner itemMonth;
+    Spinner itemMonth, categorySpinner;
     ArrayAdapter<CharSequence> adapter;
     String monthSelected = "None";
+    String categorySelected = "None";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,13 @@ public class manualAdd extends AppCompatActivity {
         viewDataBtn = (Button)findViewById(R.id.viewDataBtn);
         removeDataBtn = (Button)findViewById(R.id.removeDataBtn);
         itemMonth = findViewById(R.id.itemMonth);
+        categorySpinner = findViewById(R.id.categorySpinner);
 
         addData();
         viewData();
         deleteData();
         selectMonth();
+        selectCategory();
     }
 
     public void addData(){
@@ -43,6 +46,7 @@ public class manualAdd extends AppCompatActivity {
             public void onClick(View view) {
                 Item item;
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(manualAdd.this);
+                dataBaseHelper.updateCategory(categorySelected, Double.parseDouble(itemPriceText.getText().toString()));
                 boolean insert = false;
                 try {
                     item = new Item(itemNameText.getText().toString(), Double.parseDouble(itemPriceText.getText().toString()),
@@ -102,6 +106,26 @@ public class manualAdd extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void selectCategory(){
+        adapter = ArrayAdapter.createFromResource(this,
+                R.array.categories, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                categorySelected = adapterView.getItemAtPosition(i).toString();
+                Toast.makeText(manualAdd.this, categorySelected + " Selected", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
 }

@@ -19,7 +19,7 @@ public class viewBudget extends AppCompatActivity {
         viewBudgetList = (ListView)findViewById(R.id.viewBudgetList);
 
         DataBaseHelper dataBaseHelper = new DataBaseHelper(viewBudget.this);
-        List<Category> categoryList = dataBaseHelper.viewCategoryData();
+        List<Category> categoryList = dataBaseHelper.viewCategoryData(" ");
 
         ArrayAdapter itemArrayAdapter = new ArrayAdapter<Category>(viewBudget.this,android.R.layout.simple_expandable_list_item_1, categoryList);
         viewBudgetList.setAdapter(itemArrayAdapter);

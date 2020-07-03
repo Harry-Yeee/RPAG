@@ -3,11 +3,21 @@ package com.example.rpag;
 public class Category {
     private String categoryName;
     private double categoryBudget;
+    private double categorySpent;
     private int categoryID;
 
-    public Category(String categoryName, double categoryBudget, int categoryID) {
+    public double getCategorySpent() {
+        return categorySpent;
+    }
+
+    public void setCategorySpent(double categorySpent) {
+        this.categorySpent = categorySpent;
+    }
+
+    public Category(String categoryName, double categoryBudget, double categorySpent, int categoryID) {
         this.categoryName = categoryName;
         this.categoryBudget = categoryBudget;
+        this.categorySpent = categorySpent;
         this.categoryID = categoryID;
     }
 
@@ -40,6 +50,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return categoryName + "  Budget: $ " + categoryBudget;
+        return categoryName + "  Budget: $ " + categoryBudget + " Spent: $" + categorySpent;
     }
 }

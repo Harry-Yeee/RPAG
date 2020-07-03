@@ -28,7 +28,7 @@
         android:layout_marginTop="32dp"
         android:text="Add Data"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemMonth" />
+        app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
 
     <EditText
         android:id="@+id/itemPriceText"
@@ -50,12 +50,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginRight="150dp"
         android:text="View Data"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addDataBtn"
-        app:layout_constraintTop_toBottomOf="@+id/itemMonth" />
+        app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
 
     <Button
         android:id="@+id/removeDataBtn"
@@ -64,24 +61,28 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:text="Remove Data"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewDataBtn"
-        app:layout_constraintTop_toBottomOf="@+id/itemMonth" />
+        app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
 
     <Spinner
         android:id="@+id/itemMonth"
-        android:layout_width="match_parent"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="170dp"
-        android:layout_marginRight="170dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemPriceText" />
+
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemMonth" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

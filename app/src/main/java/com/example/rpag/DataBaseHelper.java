@@ -18,6 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //Category Table fields
     public static final String CATEGORY_NAME = "CATEGORY_NAME";
     public static final String CATEGORY_BUDGET = "CATEGORY_BUDGET";
+    public static final String CATEGORY_SPENT = "CATEGORY_SPENT";
     public static final String CATEGORY_ID = "CATEGORY_ID";
 
 
@@ -29,7 +30,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(@Nullable Context context) {
 
-        super(context, "test1.db", null, 1);
+        super(context, "test3.db", null, 1);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(createItemTable);
 
         String createCategoryTable = "CREATE TABLE " + CATEGORY_TABLE + " (" + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                CATEGORY_NAME + " TEXT, " + CATEGORY_BUDGET + " DOUBLE)";
+                CATEGORY_NAME + " TEXT, " + CATEGORY_BUDGET + " DOUBLE, " + CATEGORY_SPENT + " DOUBLE)";
         sqLiteDatabase.execSQL(createCategoryTable);
     }
 
@@ -72,6 +73,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         contentValues.put(CATEGORY_NAME, category.getCategoryName());
         contentValues.put(CATEGORY_BUDGET, category.getCategoryBudget());
+        contentValues.put(CATEGORY_SPENT, category.getCategorySpent());
 
         long insert = sqLiteDatabase.insert(CATEGORY_TABLE, null, contentValues);
         if(insert == -1){
@@ -107,7 +109,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return itemList;
     }
 
-    public List<Category> viewCategoryData(){
+    public List<Category> viewCategoryData(String category){
         List<Category> categoryList = new ArrayList<>();
 
         String queryString = "SELECT * FROM " + CATEGORY_TABLE;
@@ -121,8 +123,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
                 double budget = cursor.getDouble(2);
+                double spent = cursor.getDouble(3);
 
-                Category temp = new Category(name, budget, id);
+                Category temp = new Category(name, budget, spent, id);
+                if(name.equals(category)){
+                    deleteData(temp);
+                }
                 categoryList.add(temp);
             }while(cursor.moveToNext());
         }
@@ -132,9 +138,97 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return categoryList;
     }
 
+
+
+    public double checkCategory(String category){
+
+        String queryString = "SELECT * FROM " + CATEGORY_TABLE;
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                double budget = cursor.getDouble(2);
+                double spent = cursor.getDouble(3);
+
+                Category temp = new Category(name, budget, spent, id);
+                if(name.equals(category)){
+                    deleteData(temp);
+                    return spent;
+                }
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+        return 0.0;
+    }
+
+
+    public void updateCategory(String category, double itemCost){
+
+        String queryString = "SELECT * FROM " + CATEGORY_TABLE;
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                double budget = cursor.getDouble(2);
+                double spent = cursor.getDouble(3);
+
+                Category temp = new Category(name, budget, spent, id);
+                if(name.equals(category)){
+                    deleteData(temp);
+                    temp = new Category(name, budget, spent + itemCost, id);
+                    insertData(temp);
+                }
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public boolean deleteData(Item item){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         String queryString = "DELETE FROM " + ITEM_TABLE + " WHERE " + ITEM_ID + " = " + item.getItemId();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean deleteData(Category category){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + CATEGORY_ID + " = " + category.getCategoryID();
 
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
 

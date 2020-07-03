@@ -57,8 +57,9 @@ public class setBudget extends AppCompatActivity {
             public void onClick(View view) {
                 Category category;
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(setBudget.this);
+                double spent = dataBaseHelper.checkCategory(categorySelected); //check to see if the category already exists in database
                 try {
-                    category = new Category(categorySelected, Double.parseDouble(setBudgetText.getText().toString()), -1);
+                    category = new Category(categorySelected, Double.parseDouble(setBudgetText.getText().toString()), spent, -1);
                     dataBaseHelper.insertData(category);
                     Toast.makeText(setBudget.this, "Budget Set", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
