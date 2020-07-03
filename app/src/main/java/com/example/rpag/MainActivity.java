@@ -13,7 +13,7 @@ import android.widget.Spinner;
 
 
 public class MainActivity extends AppCompatActivity {
-    DatabaseHelper myDb;
+    public static DatabaseHelper myDb;
     EditText editName, editPrice, editDate,editTextId;
     Button btnAddData;
     Button btnviewAll;

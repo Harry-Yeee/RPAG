@@ -124,6 +124,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    public boolean updateBudget(String name,Double price,String date, String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2,name);
+        contentValues.put(COL_3,price);
+        contentValues.put(COL_4,date);
+        long result = db.insert(OVERVIEW,null ,contentValues);
+        if(result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public Cursor getBudgetData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from "+ OVERVIEW,null);
+        return res;
+    }
+
     public boolean updateData(String id,String name,Double price,String date, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
