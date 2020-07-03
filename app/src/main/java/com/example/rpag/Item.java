@@ -3,14 +3,14 @@ package com.example.rpag;
 public class Item {
     private String itemName;
     private double itemPrice;
-    private int itemDate;
-    private int id;
+    private String itemDate;
+    private int itemId;
 
-    public Item(String itemName, double itemPrice, int itemDate, int id) {
+    public Item(String itemName, double itemPrice, String itemDate, int itemId) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemDate = itemDate;
-        this.id = id;
+        this.itemId = itemId;
     }
 
     public Item() {
@@ -32,24 +32,24 @@ public class Item {
         this.itemPrice = itemPrice;
     }
 
-    public int getItemDate() {
+    public String getItemDate() {
         return itemDate;
     }
 
-    public void setItemDate(int itemDate) {
+    public void setItemDate(String itemDate) {
         this.itemDate = itemDate;
     }
 
-    public int getId() {
-        return id;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     @Override
     public String toString() {
-        return "ID: "+ id + " " + itemName + " $ " + itemPrice + " Month: " + itemDate;
+        return "ID: "+ itemId + " " + itemName + " $ " + itemPrice + " Month: " + itemDate;
     }
 }

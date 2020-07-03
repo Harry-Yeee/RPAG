@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".deleteData"></activity>
+        <activity android:name=".viewBudget"></activity>
+        <activity android:name=".setBudget" />
+        <activity android:name=".deleteData" />
         <activity android:name=".viewData" />
         <activity android:name=".manualAdd" />
         <activity android:name=".pieChart" />

@@ -35,6 +35,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button setBudgetBtn = (Button)findViewById(R.id.setBudgetBtn);
+        setBudgetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent setBudgetIntent = new Intent(getApplicationContext(), setBudget.class);
+                startActivity(setBudgetIntent);
+            }
+        });
+
+        Button viewBudgetBtn = (Button)findViewById(R.id.viewBudgetBtn);
+        viewBudgetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewBudgetIntent = new Intent(getApplicationContext(), viewBudget.class);
+                startActivity(viewBudgetIntent);
+            }
+        });
+
 
     }
 }
