@@ -99,6 +99,16 @@
                 android:paddingBottom="5dp"
                 android:text=""
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableTotalSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
@@ -127,6 +137,16 @@
 
             <TextView
                 android:id="@+id/tableHousingRemain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableHousingSpent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -169,6 +189,16 @@
                 android:paddingBottom="5dp"
                 android:text=""
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableTransSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
@@ -197,6 +227,16 @@
 
             <TextView
                 android:id="@+id/tableFoodRemain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableFoodSpent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -239,6 +279,16 @@
                 android:paddingBottom="5dp"
                 android:text=""
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableUtilSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
@@ -267,6 +317,16 @@
 
             <TextView
                 android:id="@+id/tableHealthRemain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableHealthSpent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -309,6 +369,16 @@
                 android:paddingBottom="5dp"
                 android:text=""
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableInsSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
@@ -337,6 +407,16 @@
 
             <TextView
                 android:id="@+id/tableSilRemain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableSilSpent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -379,6 +459,16 @@
                 android:paddingBottom="5dp"
                 android:text=""
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableEntSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
@@ -407,6 +497,16 @@
 
             <TextView
                 android:id="@+id/tablePerRemain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tablePerSpent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -449,11 +549,21 @@
                 android:paddingBottom="5dp"
                 android:text=""
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tableMisSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text=""
+                android:textSize="18sp" />
         </TableRow>
     </TableLayout>
 
     <Button
-        android:id="@+id/btnUpdateBudget"
+        android:id="@+id/button_updateBudget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

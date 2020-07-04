@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     // the data base name will be the name of that month
     public static final String DATABASE_NAME = "June.db";
@@ -26,18 +28,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CAT_9 = "Personal_Spending";
     public static final String CAT_10 = "Miscellaneous";
 
-    // Overview table create statement
-    private static final String CREATE_OVERVIEW_TABLE = "CREATE TABLE " +
-            OVERVIEW + "(" + Budget_COL + " DOUBLE," +
-            CAT_1 + " DOUBLE," + CAT_2 + " DOUBLE," + CAT_3 + " DOUBLE," + CAT_4 + " DOUBLE," +
-            CAT_5 + " DOUBLE," + CAT_6 + " DOUBLE," + CAT_7 + " DOUBLE," + CAT_8 + " DOUBLE," +
-            CAT_9 + " DOUBLE," + CAT_10 + " DOUBLE" + ")";
-
     // generic column names
     public static final String COL_1 = "ID";
     public static final String COL_2 = "NAME";
     public static final String COL_3 = "PRICE";
     public static final String COL_4 = "DATE";
+
+    // Overview table create statement
+    private static final String CREATE_OVERVIEW_TABLE = "CREATE TABLE " +
+            OVERVIEW + "(" + COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT," + Budget_COL + " DOUBLE," +
+            CAT_1 + " DOUBLE," + CAT_2 + " DOUBLE," + CAT_3 + " DOUBLE," + CAT_4 + " DOUBLE," +
+            CAT_5 + " DOUBLE," + CAT_6 + " DOUBLE," + CAT_7 + " DOUBLE," + CAT_8 + " DOUBLE," +
+            CAT_9 + " DOUBLE," + CAT_10 + " DOUBLE" + ")";
 
     // new table for house category
     public static final String HOUSING = "housing_table";
@@ -124,13 +126,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean updateBudget(String name,Double price,String date, String category) {
+    public void initializeBudget(){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2,name);
-        contentValues.put(COL_3,price);
-        contentValues.put(COL_4,date);
-        long result = db.insert(OVERVIEW,null ,contentValues);
+        contentValues.put(Budget_COL,0);
+        contentValues.put(CAT_1,0);
+        contentValues.put(CAT_2,0);
+        contentValues.put(CAT_3,0);
+        contentValues.put(CAT_4,0);
+        contentValues.put(CAT_5,0);
+        contentValues.put(CAT_6,0);
+        contentValues.put(CAT_7,0);
+        contentValues.put(CAT_8,0);
+        contentValues.put(CAT_9,0);
+        contentValues.put(CAT_10,0);
+        // initialize spending row
+        long insertSpent = db.insert(OVERVIEW,null ,contentValues);
+        if(insertSpent == -1)
+            System.out.println("Spent failed to initialize");
+        else
+            System.out.println("Spent initialized");
+        // initialize budget row
+        long insertBudget = db.insert(OVERVIEW,null ,contentValues);
+        if(insertBudget == -1)
+            System.out.println("Budget failed to initialize");
+        else
+            System.out.println("Budget initialized");
+    }
+
+    public boolean updateBudget(ArrayList<Double> list, String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1,id);
+        contentValues.put(Budget_COL,list.get(0));
+        System.out.println(list.get(0));
+        contentValues.put(CAT_1,list.get(1));
+        contentValues.put(CAT_2,list.get(2));
+        contentValues.put(CAT_3,list.get(3));
+        contentValues.put(CAT_4,list.get(4));
+        contentValues.put(CAT_5,list.get(5));
+        contentValues.put(CAT_6,list.get(6));
+        contentValues.put(CAT_7,list.get(7));
+        contentValues.put(CAT_8,list.get(8));
+        contentValues.put(CAT_9,list.get(9));
+        contentValues.put(CAT_10,list.get(10));
+        // id here should be 2, budget is stored at 2nd row
+        long result = db.update(OVERVIEW, contentValues, "ID = ?",new String[] { id });
         if(result == -1)
             return false;
         else
