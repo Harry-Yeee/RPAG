@@ -23,14 +23,14 @@ public class barChart extends AppCompatActivity {
         BarChart barChart = findViewById(R.id.barChart);
 
         ArrayList<BarEntry> items = new ArrayList<>();
-        items.add(new BarEntry(3,10));
-        items.add(new BarEntry(5, 15));
-        items.add(new BarEntry(7, 25));
-        items.add(new BarEntry(9, 20));
-        items.add(new BarEntry(3,2));
-        items.add(new BarEntry(8, 20));
-        items.add(new BarEntry(1, 25));
+        items.add(new BarEntry(1,10));
+        items.add(new BarEntry(2, 15));
+        items.add(new BarEntry(3, 25));
+        items.add(new BarEntry(4, 20));
+        items.add(new BarEntry(5,2));
         items.add(new BarEntry(6, 20));
+        items.add(new BarEntry(7, 25));
+        items.add(new BarEntry(8, 20));
 
         BarDataSet barDataSet = new BarDataSet(items, "Items");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
