@@ -193,7 +193,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 Category temp = new Category(name, budget, spent, remaining, id);
                 if(name.equals(category)){
                     deleteData(temp);
-                    temp = new Category(name, budget, spent + itemCost, budget - spent, id);
+                    temp = new Category(name, budget, spent + itemCost, budget - spent - itemCost, id);
                     insertData(temp);
                 }
             }while(cursor.moveToNext());

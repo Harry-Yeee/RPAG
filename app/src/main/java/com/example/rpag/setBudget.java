@@ -60,9 +60,10 @@ public class setBudget extends AppCompatActivity {
                 Category temp = dataBaseHelper.checkCategory(categorySelected); //check to see if the category already exists in database
                 double spent = 0.0;
                 double remaining = Double.parseDouble(setBudgetText.getText().toString());
+                double budget = 0.0;
                 if(temp != null){
                     spent = temp.getCategorySpent();
-                    remaining = temp.getCategoryRemaining();
+                    remaining = Double.parseDouble(setBudgetText.getText().toString()) - spent;
                 }
                 try {
                     category = new Category(categorySelected, Double.parseDouble(setBudgetText.getText().toString()), spent, remaining,-1);
