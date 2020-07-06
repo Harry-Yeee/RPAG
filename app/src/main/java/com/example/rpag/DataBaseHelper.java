@@ -19,6 +19,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String CATEGORY_NAME = "CATEGORY_NAME";
     public static final String CATEGORY_BUDGET = "CATEGORY_BUDGET";
     public static final String CATEGORY_SPENT = "CATEGORY_SPENT";
+    public static final String CATEGORY_REMAINING = "CATEGORY_REMAINING";
     public static final String CATEGORY_ID = "CATEGORY_ID";
 
 
@@ -30,7 +31,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(@Nullable Context context) {
 
-        super(context, "test3.db", null, 1);
+        super(context, "test4.db", null, 1);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(createItemTable);
 
         String createCategoryTable = "CREATE TABLE " + CATEGORY_TABLE + " (" + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                CATEGORY_NAME + " TEXT, " + CATEGORY_BUDGET + " DOUBLE, " + CATEGORY_SPENT + " DOUBLE)";
+                CATEGORY_NAME + " TEXT, " + CATEGORY_BUDGET + " DOUBLE, " + CATEGORY_SPENT + " DOUBLE, " + CATEGORY_REMAINING + " DOUBLE)";
         sqLiteDatabase.execSQL(createCategoryTable);
     }
 
@@ -74,6 +75,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(CATEGORY_NAME, category.getCategoryName());
         contentValues.put(CATEGORY_BUDGET, category.getCategoryBudget());
         contentValues.put(CATEGORY_SPENT, category.getCategorySpent());
+        contentValues.put(CATEGORY_REMAINING, category.getCategoryRemaining());
 
         long insert = sqLiteDatabase.insert(CATEGORY_TABLE, null, contentValues);
         if(insert == -1){
@@ -124,8 +126,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String name = cursor.getString(1);
                 double budget = cursor.getDouble(2);
                 double spent = cursor.getDouble(3);
+                double remaining = cursor.getDouble(4);
 
-                Category temp = new Category(name, budget, spent, id);
+                Category temp = new Category(name, budget, spent, remaining, id);
                 if(name.equals(category)){
                     deleteData(temp);
                 }
@@ -140,7 +143,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-    public double checkCategory(String category){
+    public Category checkCategory(String category){
 
         String queryString = "SELECT * FROM " + CATEGORY_TABLE;
 
@@ -154,18 +157,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String name = cursor.getString(1);
                 double budget = cursor.getDouble(2);
                 double spent = cursor.getDouble(3);
+                double remaining = cursor.getDouble(4);
 
-                Category temp = new Category(name, budget, spent, id);
+                Category temp = new Category(name, budget, spent, remaining, id);
                 if(name.equals(category)){
                     deleteData(temp);
-                    return spent;
+                    return temp;
                 }
             }while(cursor.moveToNext());
         }
 
+
         cursor.close();
         sqLiteDatabase.close();
-        return 0.0;
+        return null;
     }
 
 
@@ -183,11 +188,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String name = cursor.getString(1);
                 double budget = cursor.getDouble(2);
                 double spent = cursor.getDouble(3);
+                double remaining = cursor.getDouble(4);
 
-                Category temp = new Category(name, budget, spent, id);
+                Category temp = new Category(name, budget, spent, remaining, id);
                 if(name.equals(category)){
                     deleteData(temp);
-                    temp = new Category(name, budget, spent + itemCost, id);
+                    temp = new Category(name, budget, spent + itemCost, budget - spent, id);
                     insertData(temp);
                 }
             }while(cursor.moveToNext());

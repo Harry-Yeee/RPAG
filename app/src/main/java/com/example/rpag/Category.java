@@ -4,6 +4,7 @@ public class Category {
     private String categoryName;
     private double categoryBudget;
     private double categorySpent;
+    private double categoryRemaining;
     private int categoryID;
 
     public double getCategorySpent() {
@@ -14,11 +15,20 @@ public class Category {
         this.categorySpent = categorySpent;
     }
 
-    public Category(String categoryName, double categoryBudget, double categorySpent, int categoryID) {
+    public Category(String categoryName, double categoryBudget, double categorySpent, double categoryRemaining, int categoryID) {
         this.categoryName = categoryName;
         this.categoryBudget = categoryBudget;
         this.categorySpent = categorySpent;
+        this.categoryRemaining = categoryRemaining;
         this.categoryID = categoryID;
+    }
+
+    public double getCategoryRemaining() {
+        return categoryRemaining;
+    }
+
+    public void setCategoryRemaining(double categoryRemaining) {
+        this.categoryRemaining = categoryRemaining;
     }
 
     public Category() {
@@ -50,6 +60,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return categoryName + "  Budget: $ " + categoryBudget + " Spent: $" + categorySpent;
+        return categoryName + "\n    Budget: $ " + categoryBudget + "\n    Spent: $" + categorySpent +
+                               " Remaining: $ " + categoryRemaining;
     }
 }
