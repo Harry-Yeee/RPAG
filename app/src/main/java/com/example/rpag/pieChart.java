@@ -21,16 +21,36 @@ public class pieChart extends AppCompatActivity {
         setContentView(R.layout.activity_pie_chart);
 
         PieChart pieChart = findViewById(R.id.pieChart);
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(pieChart.this);
+
+        String [] category = new String[] {"Housing", "Transportation", "Food", "Utilities", "Healthcare", "Insurance",
+                "Save_Invest_Loan", "Entertainment", "Personal_Spending", "Miscellaneous"};
+
+        double [] categorySpent = new double[10];
+        for(int i = 0; i < 10; i++){
+            try {
+                Category categoryData = dataBaseHelper.getCategoryData(category[i]);
+                if (category != null) {
+                    categorySpent[i+1] = categoryData.getCategorySpent();
+                } else {
+                    categorySpent[i+1] = 0.0;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         ArrayList<PieEntry> categories = new ArrayList<>();
-        categories.add(new PieEntry(2,10));
-        categories.add(new PieEntry(5, 15));
-        categories.add(new PieEntry(7, 25));
-        categories.add(new PieEntry(9, 20));
-        categories.add(new PieEntry(3,2));
-        categories.add(new PieEntry(8, 20));
-        categories.add(new PieEntry(1, 25));
-        categories.add(new PieEntry(6, 20));
+        categories.add(new PieEntry((float)categorySpent[0],"Housing"));
+        categories.add(new PieEntry((float)categorySpent[1], "Transportation"));
+        categories.add(new PieEntry((float)categorySpent[2], "Food"));
+        categories.add(new PieEntry((float)categorySpent[3], "Utilities"));
+        categories.add(new PieEntry((float)categorySpent[4],"Healthcare"));
+        categories.add(new PieEntry((float)categorySpent[5], "Insurance"));
+        categories.add(new PieEntry((float)categorySpent[6], "Save_Invest_Loan"));
+        categories.add(new PieEntry((float)categorySpent[7], "Entertainment"));
+        categories.add(new PieEntry((float)categorySpent[8], "Personal_Spending"));
+        categories.add(new PieEntry((float)categorySpent[9], "Miscellaneous"));
 
         PieDataSet pieDataSet = new PieDataSet(categories, "Categories");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);

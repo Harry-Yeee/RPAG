@@ -46,9 +46,9 @@ public class manualAdd extends AppCompatActivity {
             public void onClick(View view) {
                 Item item;
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(manualAdd.this);
-                dataBaseHelper.updateCategory(categorySelected, Double.parseDouble(itemPriceText.getText().toString()));
                 boolean insert = false;
                 try {
+                    dataBaseHelper.updateCategory(categorySelected, Double.parseDouble(itemPriceText.getText().toString()));
                     item = new Item(itemNameText.getText().toString(), Double.parseDouble(itemPriceText.getText().toString()),
                                    monthSelected, -1);
                     insert = dataBaseHelper.insertData(item);
@@ -98,7 +98,7 @@ public class manualAdd extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 monthSelected = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(manualAdd.this, monthSelected + " Selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(manualAdd.this, monthSelected + " Selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -117,7 +117,7 @@ public class manualAdd extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 categorySelected = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(manualAdd.this, categorySelected + " Selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(manualAdd.this, categorySelected + " Selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -182,6 +182,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
 
+        boolean found = false; //does category exist
+
         if(cursor.moveToFirst()){
             do{
                 int id = cursor.getInt(0);
@@ -195,12 +197,47 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     deleteData(temp);
                     temp = new Category(name, budget, spent + itemCost, budget - spent - itemCost, id);
                     insertData(temp);
+                    found = true;
                 }
             }while(cursor.moveToNext());
         }
 
+        //setting up default category if it does not exist
+        if(!found){
+            insertData(new Category(category, 100.0, itemCost, 100.0-itemCost, -1));
+        }
+
         cursor.close();
         sqLiteDatabase.close();
+    }
+
+    public Category getCategoryData(String category){
+
+        String queryString = "SELECT * FROM " + CATEGORY_TABLE;
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                double budget = cursor.getDouble(2);
+                double spent = cursor.getDouble(3);
+                double remaining = cursor.getDouble(4);
+
+                Category temp = new Category(name, budget, spent, remaining, id);
+                if(name.equals(category)){
+                    return temp;
+                }
+            }while(cursor.moveToNext());
+        }
+
+
+        cursor.close();
+        sqLiteDatabase.close();
+        return null;
     }
 
 
