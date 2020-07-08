@@ -32,9 +32,10 @@ public class pieChart extends AppCompatActivity {
                 Category categoryData = dataBaseHelper.getCategoryData(category[i]);
                 if (category != null) {
                     categorySpent[i+1] = categoryData.getCategorySpent();
-                } else {
+                }else {
                     categorySpent[i+1] = 0.0;
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

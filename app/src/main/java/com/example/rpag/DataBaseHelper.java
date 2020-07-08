@@ -113,6 +113,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public List<Category> viewCategoryData(String category){
         List<Category> categoryList = new ArrayList<>();
+        List<Category> totalBudget = new ArrayList<>();
 
         String queryString = "SELECT * FROM " + CATEGORY_TABLE;
 
@@ -129,10 +130,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 double remaining = cursor.getDouble(4);
 
                 Category temp = new Category(name, budget, spent, remaining, id);
+
+                /*
                 if(name.equals(category)){
                     deleteData(temp);
                 }
-                categoryList.add(temp);
+                 */
+                if(!name.equals("Total Budget")) {
+                    categoryList.add(temp);
+                }
+
+                //getting Total Budget
+                if(name.equals(category)){
+                    totalBudget.add(temp);
+                    return totalBudget;
+                }
             }while(cursor.moveToNext());
         }
 
@@ -199,6 +211,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     insertData(temp);
                     found = true;
                 }
+                if(name.equals("Total Budget")){
+                    deleteData(temp);
+                    temp = new Category(name, budget, spent + itemCost, budget - spent - itemCost, id);
+                    insertData(temp);
+                }
             }while(cursor.moveToNext());
         }
 
@@ -239,21 +256,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public boolean deleteData(Item item){

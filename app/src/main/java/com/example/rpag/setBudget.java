@@ -33,7 +33,7 @@ public class setBudget extends AppCompatActivity {
 
     public void viewCategory(){
         adapter = ArrayAdapter.createFromResource(this,
-                R.array.categories, android.R.layout.simple_spinner_item);
+                R.array.categoriesAndBudget, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySP.setAdapter(adapter);
 

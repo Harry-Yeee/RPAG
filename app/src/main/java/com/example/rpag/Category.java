@@ -60,7 +60,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return categoryName + "\n    Budget: $ " + categoryBudget + "\n    Spent:   $ " + categorySpent +
-                               "   Remaining: $ " + categoryRemaining;
+        return categoryName + "\n    Budget: $ " + (float)categoryBudget + "\n    Spent:   $ " + (float)categorySpent +
+                               "   Remaining: $ " + (float)categoryRemaining;
     }
 }
