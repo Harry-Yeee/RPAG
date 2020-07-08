@@ -15,10 +15,15 @@ import java.util.ArrayList;
 
 public class pieChart extends AppCompatActivity {
 
+    String month = "Selected Month";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie_chart);
+
+        if(getIntent().hasExtra("month")){
+            month = getIntent().getStringExtra("month");
+        }
 
         PieChart pieChart = findViewById(R.id.pieChart);
         DataBaseHelper dataBaseHelper = new DataBaseHelper(pieChart.this);
@@ -26,27 +31,22 @@ public class pieChart extends AppCompatActivity {
         String [] category = new String[] {"Housing", "Transportation", "Food", "Utilities", "Healthcare", "Insurance",
                 "Save_Invest_Loan", "Entertainment", "Personal_Spending", "Miscellaneous"};
 
+        ArrayList<PieEntry> categories = new ArrayList<>();
+
         double [] categorySpent = new double[10];
         for(int i = 0; i < 10; i++){
             try {
-                Category categoryData = dataBaseHelper.getCategoryData(category[i]);
-                if (category != null) {
-                    categorySpent[i+1] = categoryData.getCategorySpent();
-                }else {
-                    categorySpent[i+1] = 0.0;
-                }
+                Category categoryData = dataBaseHelper.getCategoryData(category[i], month);
+                if (categoryData != null && categoryData.getCategoryMonth().equals(month)) {
+                    categorySpent[i] = categoryData.getCategorySpent();
 
+                    categories.add(new PieEntry((float)categoryData.getCategorySpent(), category[i]));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        ArrayList<PieEntry> categories = new ArrayList<>();
-        for(int i= 0; i<10; i++){
-            if(categorySpent[i] != 0.0){
-                categories.add(new PieEntry((float) categorySpent[i], category[i]));
-            }
-        }
         /*
         categories.add(new PieEntry((float)categorySpent[0],"Housing"));
         categories.add(new PieEntry((float)categorySpent[1], "Transportation"));

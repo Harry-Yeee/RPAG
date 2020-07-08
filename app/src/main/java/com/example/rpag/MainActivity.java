@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         viewBudgetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewBudgetIntent = new Intent(getApplicationContext(), viewBudget.class);
+                Intent viewBudgetIntent = new Intent(getApplicationContext(), viewBudgetMonth.class);
                 startActivity(viewBudgetIntent);
             }
         });

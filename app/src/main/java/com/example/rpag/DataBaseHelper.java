@@ -20,6 +20,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String CATEGORY_BUDGET = "CATEGORY_BUDGET";
     public static final String CATEGORY_SPENT = "CATEGORY_SPENT";
     public static final String CATEGORY_REMAINING = "CATEGORY_REMAINING";
+    public static final String CATEGORY_MONTH = "CATEGORY_MONTH";
     public static final String CATEGORY_ID = "CATEGORY_ID";
 
 
@@ -27,21 +28,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String ITEM_NAME = "ITEM_NAME";
     public static final String ITEM_PRICE = "ITEM_PRICE";
     public static final String ITEM_DATE = "ITEM_DATE";
+    public static final String ITEM_CATEGORY = "ITEM_CATEGORY";
     public static final String ITEM_ID = "ITEM_ID";
 
     public DataBaseHelper(@Nullable Context context) {
 
-        super(context, "test4.db", null, 1);
+        super(context, "test6.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createItemTable = "CREATE TABLE " + ITEM_TABLE + " (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                ITEM_NAME + " TEXT, " + ITEM_DATE + " TEXT, "  + ITEM_PRICE + " DOUBLE)";
+                ITEM_NAME + " TEXT, " + ITEM_DATE + " TEXT, " + ITEM_CATEGORY + " TEXT, " + ITEM_PRICE + " DOUBLE)";
         sqLiteDatabase.execSQL(createItemTable);
 
         String createCategoryTable = "CREATE TABLE " + CATEGORY_TABLE + " (" + CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                CATEGORY_NAME + " TEXT, " + CATEGORY_BUDGET + " DOUBLE, " + CATEGORY_SPENT + " DOUBLE, " + CATEGORY_REMAINING + " DOUBLE)";
+                CATEGORY_NAME + " TEXT, " + CATEGORY_BUDGET + " DOUBLE, " + CATEGORY_SPENT + " DOUBLE, " + CATEGORY_REMAINING + " DOUBLE, " +
+                CATEGORY_MONTH + " TEXT)";
         sqLiteDatabase.execSQL(createCategoryTable);
     }
 
@@ -59,6 +62,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(ITEM_NAME, item.getItemName());
         contentValues.put(ITEM_PRICE, item.getItemPrice());
         contentValues.put(ITEM_DATE, item.getItemDate());
+        contentValues.put(ITEM_CATEGORY, item.getItemCategory());
 
         long insert = sqLiteDatabase.insert(ITEM_TABLE, null, contentValues);
         if(insert == -1){
@@ -76,6 +80,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(CATEGORY_BUDGET, category.getCategoryBudget());
         contentValues.put(CATEGORY_SPENT, category.getCategorySpent());
         contentValues.put(CATEGORY_REMAINING, category.getCategoryRemaining());
+        contentValues.put(CATEGORY_MONTH, category.getCategoryMonth());
 
         long insert = sqLiteDatabase.insert(CATEGORY_TABLE, null, contentValues);
         if(insert == -1){
@@ -99,9 +104,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 int itemID = cursor.getInt(0);
                 String itemName = cursor.getString(1);
                 String itemDate = cursor.getString(2);
-                double itemPrice = cursor.getDouble(3);
+                String itemCategory = cursor.getString(3);
+                double itemPrice = cursor.getDouble(4);
 
-                Item temp = new Item(itemName, itemPrice, itemDate, itemID);
+                Item temp = new Item(itemName, itemPrice, itemDate, itemCategory, itemID);
                 itemList.add(temp);
             }while(cursor.moveToNext());
         }
@@ -111,7 +117,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return itemList;
     }
 
-    public List<Category> viewCategoryData(String category){
+    public List<Category> viewCategoryData(String category, String categoryMonth){
         List<Category> categoryList = new ArrayList<>();
         List<Category> totalBudget = new ArrayList<>();
 
@@ -128,20 +134,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 double budget = cursor.getDouble(2);
                 double spent = cursor.getDouble(3);
                 double remaining = cursor.getDouble(4);
+                String month = cursor.getString(5);
 
-                Category temp = new Category(name, budget, spent, remaining, id);
+                Category temp = new Category(name, budget, spent, remaining, month, id);
 
                 /*
                 if(name.equals(category)){
                     deleteData(temp);
                 }
                  */
-                if(!name.equals("Total Budget")) {
+                if(!name.equals("Total Budget") && month.equals(categoryMonth)) {
                     categoryList.add(temp);
                 }
 
                 //getting Total Budget
-                if(name.equals(category)){
+                if(name.equals(category) && month.equals(categoryMonth)){
                     totalBudget.add(temp);
                     return totalBudget;
                 }
@@ -155,7 +162,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-    public Category checkCategory(String category){
+    public Category checkCategory(String category, String categoryMonth){
 
         String queryString = "SELECT * FROM " + CATEGORY_TABLE;
 
@@ -170,9 +177,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 double budget = cursor.getDouble(2);
                 double spent = cursor.getDouble(3);
                 double remaining = cursor.getDouble(4);
+                String month = cursor.getString(5);
 
-                Category temp = new Category(name, budget, spent, remaining, id);
-                if(name.equals(category)){
+                Category temp = new Category(name, budget, spent, remaining, month, id);
+                if(name.equals(category) && month.equals(categoryMonth)){
                     deleteData(temp);
                     return temp;
                 }
@@ -186,7 +194,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void updateCategory(String category, double itemCost){
+    public void updateCategory(String category, double itemCost, String itemMonth){
 
         String queryString = "SELECT * FROM " + CATEGORY_TABLE;
 
@@ -203,17 +211,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 double budget = cursor.getDouble(2);
                 double spent = cursor.getDouble(3);
                 double remaining = cursor.getDouble(4);
+                String month = cursor.getString(5);
 
-                Category temp = new Category(name, budget, spent, remaining, id);
-                if(name.equals(category)){
+                Category temp = new Category(name, budget, spent, remaining, month, id);
+                if(name.equals(category)&& month.equals(itemMonth)){
                     deleteData(temp);
-                    temp = new Category(name, budget, spent + itemCost, budget - spent - itemCost, id);
+                    temp = new Category(name, budget, spent + itemCost, budget - spent - itemCost, month, id);
                     insertData(temp);
                     found = true;
                 }
-                if(name.equals("Total Budget")){
+                if(name.equals("Total Budget") && month.equals(itemMonth)){
                     deleteData(temp);
-                    temp = new Category(name, budget, spent + itemCost, budget - spent - itemCost, id);
+                    temp = new Category(name, budget, spent + itemCost, budget - spent - itemCost, month, id);
                     insertData(temp);
                 }
             }while(cursor.moveToNext());
@@ -221,14 +230,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         //setting up default category if it does not exist
         if(!found){
-            insertData(new Category(category, 100.0, itemCost, 100.0-itemCost, -1));
+            insertData(new Category(category, 100.0, itemCost, 100.0-itemCost, itemMonth, -1));
         }
 
         cursor.close();
         sqLiteDatabase.close();
     }
 
-    public Category getCategoryData(String category){
+    public Category getCategoryData(String category, String categoryMonth){
 
         String queryString = "SELECT * FROM " + CATEGORY_TABLE;
 
@@ -243,19 +252,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 double budget = cursor.getDouble(2);
                 double spent = cursor.getDouble(3);
                 double remaining = cursor.getDouble(4);
+                String month = cursor.getString(5);
 
-                Category temp = new Category(name, budget, spent, remaining, id);
-                if(name.equals(category)){
+                Category temp = new Category(name, budget, spent, remaining, month, id);
+                if(name.equals(category) && month.equals(categoryMonth)){
                     return temp;
                 }
             }while(cursor.moveToNext());
         }
 
-
         cursor.close();
         sqLiteDatabase.close();
         return null;
     }
+
 
 
     public boolean deleteData(Item item){

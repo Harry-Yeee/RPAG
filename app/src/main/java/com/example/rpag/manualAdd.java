@@ -48,9 +48,10 @@ public class manualAdd extends AppCompatActivity {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(manualAdd.this);
                 boolean insert = false;
                 try {
-                    dataBaseHelper.updateCategory(categorySelected, Double.parseDouble(itemPriceText.getText().toString()));
+                    dataBaseHelper.updateCategory(categorySelected, Double.parseDouble(itemPriceText.getText().toString()),
+                                                    monthSelected);
                     item = new Item(itemNameText.getText().toString(), Double.parseDouble(itemPriceText.getText().toString()),
-                                   monthSelected, -1);
+                                   monthSelected, categorySelected, -1);
                     insert = dataBaseHelper.insertData(item);
                     //Toast.makeText(manualAdd.this, item.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {

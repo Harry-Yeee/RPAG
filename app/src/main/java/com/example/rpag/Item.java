@@ -4,13 +4,23 @@ public class Item {
     private String itemName;
     private double itemPrice;
     private String itemDate;
+    private String itemCategory;
     private int itemId;
 
-    public Item(String itemName, double itemPrice, String itemDate, int itemId) {
+    public Item(String itemName, double itemPrice, String itemDate, String itemCategory, int itemId) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemDate = itemDate;
+        this.itemCategory =itemCategory;
         this.itemId = itemId;
+    }
+
+    public String getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
     public Item() {
@@ -50,6 +60,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "ID: "+ itemId + " " + itemName + " $ " + itemPrice + " Month: " + itemDate;
+        return "ID: "+ itemId + " " + itemName + " $ " + itemPrice + " Cat: " + itemCategory + " Month: " + itemDate;
     }
 }

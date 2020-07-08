@@ -5,7 +5,21 @@ public class Category {
     private double categoryBudget;
     private double categorySpent;
     private double categoryRemaining;
+    private String categoryMonth;
     private int categoryID;
+
+    public Category() {
+    }
+
+    public Category(String categoryName, double categoryBudget, double categorySpent, double categoryRemaining,
+                    String categoryMonth, int categoryID) {
+        this.categoryName = categoryName;
+        this.categoryBudget = categoryBudget;
+        this.categorySpent = categorySpent;
+        this.categoryRemaining = categoryRemaining;
+        this.categoryMonth = categoryMonth;
+        this.categoryID = categoryID;
+    }
 
     public double getCategorySpent() {
         return categorySpent;
@@ -15,12 +29,12 @@ public class Category {
         this.categorySpent = categorySpent;
     }
 
-    public Category(String categoryName, double categoryBudget, double categorySpent, double categoryRemaining, int categoryID) {
-        this.categoryName = categoryName;
-        this.categoryBudget = categoryBudget;
-        this.categorySpent = categorySpent;
-        this.categoryRemaining = categoryRemaining;
-        this.categoryID = categoryID;
+    public String getCategoryMonth() {
+        return categoryMonth;
+    }
+
+    public void setCategoryMonth(String categoryMonth) {
+        this.categoryMonth = categoryMonth;
     }
 
     public double getCategoryRemaining() {
@@ -31,8 +45,6 @@ public class Category {
         this.categoryRemaining = categoryRemaining;
     }
 
-    public Category() {
-    }
 
     public String getCategoryName() {
         return categoryName;
@@ -60,6 +72,10 @@ public class Category {
 
     @Override
     public String toString() {
+        if(categoryName.equals("Total Budget")){
+            return categoryName + " for " + categoryMonth + "\n    Budget: $ " + (float)categoryBudget + "\n    Spent:   $ " + (float)categorySpent +
+                    "   Remaining: $ " + (float)categoryRemaining;
+        }
         return categoryName + "\n    Budget: $ " + (float)categoryBudget + "\n    Spent:   $ " + (float)categorySpent +
                                "   Remaining: $ " + (float)categoryRemaining;
     }

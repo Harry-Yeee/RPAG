@@ -16,10 +16,15 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 public class barChart extends AppCompatActivity {
-
+    String month = "Selected Month";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(getIntent().hasExtra("month")){
+            month = getIntent().getStringExtra("month");
+        }
+
         setContentView(R.layout.activity_bar_chart);
 
         BarChart barChart = findViewById(R.id.barChart);
@@ -28,22 +33,24 @@ public class barChart extends AppCompatActivity {
         String [] category = new String[] {"Housing", "Transportation", "Food", "Utilities", "Healthcare", "Insurance",
                 "Save_Invest_Loan", "Entertainment", "Personal_Spending", "Miscellaneous"};
 
-        double [] categorySpent = new double[10];
+        //double [] categorySpent = new double[10];
+        ArrayList<BarEntry> categories = new ArrayList<>();
+        float j = (float) 0.5;
         for(int i = 0; i < 10; i++){
             try {
-                Category categoryData = dataBaseHelper.getCategoryData(category[i]);
-                if (category != null) {
-                    categorySpent[i] = categoryData.getCategorySpent();
-                } else {
-                    categorySpent[i] = 0.0;
+                Category categoryData = dataBaseHelper.getCategoryData(category[i], month);
+                if (categoryData != null && categoryData.getCategoryMonth().equals(month)) {
+
+                    categories.add(new BarEntry(j, (float)categoryData.getCategorySpent()));
+                }else{
+                    categories.add(new BarEntry(j, (float)0.0));
                 }
+                j++;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-
-        ArrayList<BarEntry> categories = new ArrayList<>();
+        /*
         categories.add(new BarEntry((float) .5, (float)categorySpent[0]));
         categories.add(new BarEntry((float) 1.5, (float)categorySpent[1]));
         categories.add(new BarEntry((float) 2.5, (float)categorySpent[2]));
@@ -54,6 +61,7 @@ public class barChart extends AppCompatActivity {
         categories.add(new BarEntry((float) 7.5, (float)categorySpent[7]));
         categories.add(new BarEntry((float) 8.5, (float)categorySpent[8]));
         categories.add(new BarEntry((float) 9.5, (float)categorySpent[9]));
+         */
 
 
 
