@@ -42,6 +42,12 @@ public class pieChart extends AppCompatActivity {
         }
 
         ArrayList<PieEntry> categories = new ArrayList<>();
+        for(int i= 0; i<10; i++){
+            if(categorySpent[i] != 0.0){
+                categories.add(new PieEntry((float) categorySpent[i], category[i]));
+            }
+        }
+        /*
         categories.add(new PieEntry((float)categorySpent[0],"Housing"));
         categories.add(new PieEntry((float)categorySpent[1], "Transportation"));
         categories.add(new PieEntry((float)categorySpent[2], "Food"));
@@ -52,6 +58,8 @@ public class pieChart extends AppCompatActivity {
         categories.add(new PieEntry((float)categorySpent[7], "Entertainment"));
         categories.add(new PieEntry((float)categorySpent[8], "Personal_Spending"));
         categories.add(new PieEntry((float)categorySpent[9], "Miscellaneous"));
+         */
+
 
         PieDataSet pieDataSet = new PieDataSet(categories, "Categories");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
