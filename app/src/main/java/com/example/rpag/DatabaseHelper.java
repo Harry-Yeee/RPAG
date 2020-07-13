@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static com.example.rpag.MainActivity.myDb;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // the data base name will be the name of that month
@@ -110,16 +113,105 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(tableMatcher(category),null ,contentValues);
         if(result == -1)
             return false;
-        else
+        else{
+            updateSpending(price, category);
             return true;
+        }
     }
 
+    //if the item is inserted successful, then update the spending list
+    public void updateSpending(Double price, String Category){
+        String column;
+        int getSpending;
+        if (Category.equals("Hosuing") ){
+            column = CAT_1;
+            getSpending = 2;
+        }else if (Category.equals("Transportation") ){
+            column = CAT_2;
+            getSpending = 3;
+        }else if (Category.equals("Food") ){
+            column = CAT_3;
+            getSpending = 4;
+        }else if (Category.equals("Utilities") ){
+            column = CAT_4;
+            getSpending = 5;
+        }else if (Category.equals("Healthcare") ){
+            column = CAT_5;
+            getSpending = 6;
+        }else if (Category.equals("Insurance") ){
+            column = CAT_6;
+            getSpending = 7;
+        }else if (Category.equals("Saving, Invest, Loan") ){
+            column = CAT_7;
+            getSpending = 8;
+        }else if (Category.equals("Entertainment") ){
+            column = CAT_8;
+            getSpending = 9;
+        }else if (Category.equals("Personal Spending") ){
+            column = CAT_9;
+            getSpending = 10;
+        }else {
+            column = CAT_10;
+            getSpending = 11;
+        }
+        System.out.println("Price:  " + price + "    category: " + Category);
+        System.out.println("getSpending: " + getSpending);
+
+        // this will return a cursor with all the spending data
+        Cursor spending = myDb.getBudgetData();
+        if(spending.getCount() == 0) {
+            myDb.initializeBudget();
+            // re-initialize spending after intialize budget, so that it's not reading empty string later
+            spending = myDb.getBudgetData();
+        }
+        //read the 1st row
+        spending.moveToFirst();
+
+        // update the total spent, and the category spent of that item
+        Double newTotal, newSpending;
+        newTotal = spending.getDouble(1) + price;
+        newSpending = spending.getDouble(getSpending) + price;
+
+        System.out.println("newTotal: " + newTotal);
+        System.out.println("newSpending: " + newSpending);
+
+
+        // I stopped here, I should make a loop do this an use and if statement to work with the getSpending
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        // update new total spending
+        contentValues.put(Budget_COL,newTotal);
+
+        // use a loop to enter spending values for each category
+        int loop = 1;   // start with CAT_1 ends with CAT_10
+        while(loop != 11){
+            System.out.println("loop: " + loop);
+            if(getSpending != loop + 1) {
+                System.out.println("table: " + tableMatcher2(loop));
+                System.out.println("Spending from loop: " + spending.getDouble(loop + 1));
+                contentValues.put(tableMatcher2(loop), spending.getDouble(loop + 1)); // we start with reading the 3rd element
+            }else{
+                contentValues.put(tableMatcher2(loop), newSpending);
+            }
+            loop++;
+        }
+        String id = "1"; // this allows the database to update the firs row
+        long result = db.update(OVERVIEW, contentValues, "ID = ?",new String[] { id });
+        if(result == -1)
+            System.out.println("spending update failed");
+        else
+            System.out.println("spending update sueccessed");
+    }
+
+    // this method returns all the data from a category
     public Cursor getAllData(String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+ tableMatcher(category),null);
         return res;
     }
 
+    // this method returns a single item from a category by ID
     public Cursor getDatabyId(String id, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+ tableMatcher(category) + " WHERE " + COL_1 + "=" + id,null);
@@ -154,6 +246,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             System.out.println("Budget initialized");
     }
 
+    // if id == 1, it updates spending, if id == 2, it updates budget
     public boolean updateBudget(ArrayList<Double> list, String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -172,10 +265,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(CAT_10,list.get(10));
         // id here should be 2, budget is stored at 2nd row
         long result = db.update(OVERVIEW, contentValues, "ID = ?",new String[] { id });
-        if(result == -1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
     public Cursor getBudgetData(){
@@ -222,6 +312,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return PER;
         }else {
             return MIS;
+        }
+    }
+
+    public String tableMatcher2(int Category){
+        //System.out.println("\n" + Category + "\n" );
+        if (Category == 1){
+            return CAT_1;
+        }else if (Category == 2 ){
+            return CAT_2;
+        }else if (Category == 3 ){
+            return CAT_3;
+        }else if (Category == 4){
+            return CAT_4;
+        }else if (Category == 5){
+            return CAT_5;
+        }else if (Category == 6){
+            return CAT_6;
+        }else if (Category == 7 ){
+            return CAT_7;
+        }else if (Category == 8 ){
+            return CAT_8;
+        }else if (Category == 9 ){
+            return CAT_9;
+        }else {
+            return CAT_10;
         }
     }
 }
