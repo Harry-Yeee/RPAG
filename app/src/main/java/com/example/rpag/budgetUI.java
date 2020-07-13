@@ -80,14 +80,15 @@ public class budgetUI extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         boolean isUpdate = myDb.updateBudget(inputReader(), String.valueOf(2));
-                        if(isUpdate == true)
-                            Toast.makeText(budgetUI.this,"Data Update",Toast.LENGTH_LONG).show();
-                        else
+                        if(isUpdate == true) {
+                            Toast.makeText(budgetUI.this, "Data Update", Toast.LENGTH_LONG).show();
+                            loadSpending();
+                        }else
                             Toast.makeText(budgetUI.this,"Data not Updated",Toast.LENGTH_LONG).show();
                     }
                 }
         );
-        loadSpending();
+
     }
 
     public ArrayList<Double> inputReader(){
