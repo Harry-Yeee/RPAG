@@ -37,7 +37,7 @@ public class pieChart extends AppCompatActivity {
         for(int i = 0; i < 10; i++){
             try {
                 Category categoryData = dataBaseHelper.getCategoryData(category[i], month);
-                if (categoryData != null && categoryData.getCategoryMonth().equals(month)) {
+                if (categoryData != null && categoryData.getCategoryMonth().equals(month) && categoryData.getCategorySpent() != 0.0) {
                     categorySpent[i] = categoryData.getCategorySpent();
 
                     categories.add(new PieEntry((float)categoryData.getCategorySpent(), category[i]));
