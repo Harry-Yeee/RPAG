@@ -14,7 +14,7 @@ import android.widget.Spinner;
 
 
 public class manageActivity extends AppCompatActivity {
-    DatabaseHelper myDb;
+    public static DatabaseHelper myDb;
     EditText editName, editPrice, editDate,editTextId;
     Button btnAddData;
     Button btnviewAll;
@@ -77,7 +77,8 @@ public class manageActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         boolean isUpdate = myDb.updateData(editTextId.getText().toString(),
                                 editName.getText().toString(),
-                                Double.parseDouble(editPrice.getText().toString()), editDate.getText().toString());
+                                Double.parseDouble(editPrice.getText().toString()), editDate.getText().toString(),
+                                String.valueOf(spinner1.getSelectedItem()));
                         if(isUpdate)
                             Toast.makeText(manageActivity.this,"Data Update",Toast.LENGTH_LONG).show();
                         else
@@ -109,7 +110,7 @@ public class manageActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Cursor res = myDb.getAllData();
+                        Cursor res = myDb.getAllData(String.valueOf(spinner1.getSelectedItem()));
                         if(res.getCount() == 0) {
                             // show message
                             showMessage("Error","Nothing found");
@@ -142,7 +143,7 @@ public class manageActivity extends AppCompatActivity {
                             showMessage("Error","No Input ID");
                             return;
                         }
-                        Cursor res = myDb.getDatabyId(editTextId.getText().toString());
+                        Cursor res = myDb.getDatabyId(editTextId.getText().toString(),String.valueOf(spinner1.getSelectedItem()));
                         if(res.getCount() == 0) {
                             // show message
                             showMessage("Error","ID not found");
