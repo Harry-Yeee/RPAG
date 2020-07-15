@@ -52,7 +52,7 @@ public class takePicture extends AppCompatActivity {
         setContentView(R.layout.activity_take_picture);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setSubtitle("Click + button to insert Image");
+        actionBar.setSubtitle("Click IMAGE button to get Started");
 
         resultEditText = (EditText)findViewById(R.id.resultEditText);
         imageView = (ImageView)findViewById(R.id.imageView);
