@@ -10,12 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".selectActivity"
+            android:label="Select Your Database"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
             android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/title_activity_settings"></activity>
-        <activity android:name=".manageActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/title_manage_activity"/>
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".manageActivity"
+            android:label="@string/title_manage_activity"
+            android:parentActivityName=".selectActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

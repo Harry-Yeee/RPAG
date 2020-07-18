@@ -2,6 +2,8 @@ package com.example.rpag;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -14,7 +16,7 @@ import android.widget.Spinner;
 
 
 public class manageActivity extends AppCompatActivity {
-    public static DatabaseHelper myDb;
+    DatabaseHelper myDb;
     EditText editName, editPrice, editDate,editTextId;
     Button btnAddData;
     Button btnviewAll;
@@ -36,7 +38,10 @@ public class manageActivity extends AppCompatActivity {
         }
 
         // Add item to the database
-        myDb = new DatabaseHelper(this);
+        if(MainActivity.selectedDatabase != null) {
+            myDb = new DatabaseHelper(this,MainActivity.selectedDatabase);
+            SQLiteDatabase db = myDb.getWritableDatabase();
+        }
 
         editName = (EditText)findViewById(R.id.editText_name);
         editPrice = (EditText)findViewById(R.id.editText_price);

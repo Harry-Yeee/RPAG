@@ -22,4 +22,8 @@
     <string name="title_manage_activity">Manage Page</string>
     <string name="category_prompt">Choose a category</string>
 
+    <!-- Select Page string source -->
+    <string name="selectButtonText">Select Database</string>
+    <string name="database_prompt">Choose a database</string>
+
 </resources>

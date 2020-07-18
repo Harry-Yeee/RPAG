@@ -9,11 +9,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import static com.example.rpag.manageActivity.myDb;
+//import static com.example.rpag.manageActivity.myDb;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // the data base name will be the name of that month
-    public static final String DATABASE_NAME = "June.db";
+    public static final String DATABASE_NAME = "newDatabase.db";
 
     // the first table in the database is general overview
     public static final String OVERVIEW = "overview_table";
@@ -71,6 +71,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
+    public DatabaseHelper(Context context, String dbname) {
+        super(context, dbname, null, 1);
+    }
     //
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -114,95 +117,95 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(result == -1)
             return false;
         else{
-            updateSpending(price, category);
+//            updateSpending(price, category);
             return true;
         }
     }
 
-    //if the item is inserted successful, then update the spending list
-    public void updateSpending(Double price, String Category){
-        String column;
-        int getSpending;
-        if (Category.equals("Hosuing") ){
-            column = CAT_1;
-            getSpending = 2;
-        }else if (Category.equals("Transportation") ){
-            column = CAT_2;
-            getSpending = 3;
-        }else if (Category.equals("Food") ){
-            column = CAT_3;
-            getSpending = 4;
-        }else if (Category.equals("Utilities") ){
-            column = CAT_4;
-            getSpending = 5;
-        }else if (Category.equals("Healthcare") ){
-            column = CAT_5;
-            getSpending = 6;
-        }else if (Category.equals("Insurance") ){
-            column = CAT_6;
-            getSpending = 7;
-        }else if (Category.equals("Saving, Invest, Loan") ){
-            column = CAT_7;
-            getSpending = 8;
-        }else if (Category.equals("Entertainment") ){
-            column = CAT_8;
-            getSpending = 9;
-        }else if (Category.equals("Personal Spending") ){
-            column = CAT_9;
-            getSpending = 10;
-        }else {
-            column = CAT_10;
-            getSpending = 11;
-        }
-        System.out.println("Price:  " + price + "    category: " + Category);
-        System.out.println("getSpending: " + getSpending);
-
-        // this will return a cursor with all the spending data
-        Cursor spending = myDb.getBudgetData();
-        if(spending.getCount() == 0) {
-            myDb.initializeBudget();
-            // re-initialize spending after intialize budget, so that it's not reading empty string later
-            spending = myDb.getBudgetData();
-        }
-        //read the 1st row
-        spending.moveToFirst();
-
-        // update the total spent, and the category spent of that item
-        Double newTotal, newSpending;
-        newTotal = spending.getDouble(1) + price;
-        newSpending = spending.getDouble(getSpending) + price;
-
-        System.out.println("newTotal: " + newTotal);
-        System.out.println("newSpending: " + newSpending);
-
-
-        // I stopped here, I should make a loop do this an use and if statement to work with the getSpending
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        // update new total spending
-        contentValues.put(Budget_COL,newTotal);
-
-        // use a loop to enter spending values for each category
-        int loop = 1;   // start with CAT_1 ends with CAT_10
-        while(loop != 11){
-            System.out.println("loop: " + loop);
-            if(getSpending != loop + 1) {
-                System.out.println("table: " + tableMatcher2(loop));
-                System.out.println("Spending from loop: " + spending.getDouble(loop + 1));
-                contentValues.put(tableMatcher2(loop), spending.getDouble(loop + 1)); // we start with reading the 3rd element
-            }else{
-                contentValues.put(tableMatcher2(loop), newSpending);
-            }
-            loop++;
-        }
-        String id = "1"; // this allows the database to update the firs row
-        long result = db.update(OVERVIEW, contentValues, "ID = ?",new String[] { id });
-        if(result == -1)
-            System.out.println("spending update failed");
-        else
-            System.out.println("spending update sueccessed");
-    }
+//    //if the item is inserted successful, then update the spending list
+//    public void updateSpending(Double price, String Category){
+//        String column;
+//        int getSpending;
+//        if (Category.equals("Hosuing") ){
+//            column = CAT_1;
+//            getSpending = 2;
+//        }else if (Category.equals("Transportation") ){
+//            column = CAT_2;
+//            getSpending = 3;
+//        }else if (Category.equals("Food") ){
+//            column = CAT_3;
+//            getSpending = 4;
+//        }else if (Category.equals("Utilities") ){
+//            column = CAT_4;
+//            getSpending = 5;
+//        }else if (Category.equals("Healthcare") ){
+//            column = CAT_5;
+//            getSpending = 6;
+//        }else if (Category.equals("Insurance") ){
+//            column = CAT_6;
+//            getSpending = 7;
+//        }else if (Category.equals("Saving, Invest, Loan") ){
+//            column = CAT_7;
+//            getSpending = 8;
+//        }else if (Category.equals("Entertainment") ){
+//            column = CAT_8;
+//            getSpending = 9;
+//        }else if (Category.equals("Personal Spending") ){
+//            column = CAT_9;
+//            getSpending = 10;
+//        }else {
+//            column = CAT_10;
+//            getSpending = 11;
+//        }
+//        System.out.println("Price:  " + price + "    category: " + Category);
+//        System.out.println("getSpending: " + getSpending);
+//
+//        // this will return a cursor with all the spending data
+//        Cursor spending = myDb.getBudgetData();
+//        if(spending.getCount() == 0) {
+//            myDb.initializeBudget();
+//            // re-initialize spending after intialize budget, so that it's not reading empty string later
+//            spending = myDb.getBudgetData();
+//        }
+//        //read the 1st row
+//        spending.moveToFirst();
+//
+//        // update the total spent, and the category spent of that item
+//        Double newTotal, newSpending;
+//        newTotal = spending.getDouble(1) + price;
+//        newSpending = spending.getDouble(getSpending) + price;
+//
+//        System.out.println("newTotal: " + newTotal);
+//        System.out.println("newSpending: " + newSpending);
+//
+//
+//        // I stopped here, I should make a loop do this an use and if statement to work with the getSpending
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//
+//        // update new total spending
+//        contentValues.put(Budget_COL,newTotal);
+//
+//        // use a loop to enter spending values for each category
+//        int loop = 1;   // start with CAT_1 ends with CAT_10
+//        while(loop != 11){
+//            System.out.println("loop: " + loop);
+//            if(getSpending != loop + 1) {
+//                System.out.println("table: " + tableMatcher2(loop));
+//                System.out.println("Spending from loop: " + spending.getDouble(loop + 1));
+//                contentValues.put(tableMatcher2(loop), spending.getDouble(loop + 1)); // we start with reading the 3rd element
+//            }else{
+//                contentValues.put(tableMatcher2(loop), newSpending);
+//            }
+//            loop++;
+//        }
+//        String id = "1"; // this allows the database to update the firs row
+//        long result = db.update(OVERVIEW, contentValues, "ID = ?",new String[] { id });
+//        if(result == -1)
+//            System.out.println("spending update failed");
+//        else
+//            System.out.println("spending update sueccessed");
+//    }
 
     // this method returns all the data from a category
     public Cursor getAllData(String category) {
