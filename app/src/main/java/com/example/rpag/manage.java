@@ -1,5 +1,6 @@
 package com.example.rpag;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +18,7 @@ import java.util.List;
 public class manage extends AppCompatActivity {
 
     Spinner monthSpinner, categorySpinner;
-    Button viewItems;
+    Button viewItems, deleteItemBtn, updateItemBtn;
     ArrayAdapter<CharSequence> adapter;
     String monthSelected = "Select Month";
     String categorySelected = "Select Category";
@@ -29,35 +30,28 @@ public class manage extends AppCompatActivity {
 
         monthSpinner = findViewById(R.id.monthSpinner);
         categorySpinner = findViewById(R.id.categorySpinner);
-        viewItems = (Button)findViewById(R.id.viewItems);
+        viewItems = (Button) findViewById(R.id.viewItems);
+        deleteItemBtn = (Button) findViewById(R.id.deleteItemBtn);
+        updateItemBtn = (Button) findViewById(R.id.updateItemBtn);
+
         selectMonth();
         selectCategory();
-        viewItems.setOnClickListener(new View.OnClickListener() {
+        viewItemsList();
+        deleteItems();
+    }
+
+    private void deleteItems() {
+        deleteItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(manage.this);
-                List<Item> itemList = dataBaseHelper.viewData();
-                StringBuffer buffer = new StringBuffer();
+                try {
+                    if (!monthSelected.equals("Select Month") && !categorySelected.equals("Select Category")) {
+                        Intent deleteItemsIntent = new Intent(getApplicationContext(), deleteData.class);
+                        deleteItemsIntent.putExtra("month", monthSelected);
+                        deleteItemsIntent.putExtra("category", categorySelected);
+                        startActivity(deleteItemsIntent);
 
-
-              //  ArrayAdapter itemArrayAdapter = new ArrayAdapter<Item>(manage.this,android.R.layout.simple_expandable_list_item_1, itemList);
-                try{
-
-                    if(!monthSelected.equals("Select Month") && !categorySelected.equals("Select Category")){
-                        for(Item item: itemList){
-                            if(item.getItemCategory().equals(categorySelected)&&item.getItemDate().equals(monthSelected)) {
-                                buffer.append(item + "\n\n");
-                            }
-                        }
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(manage.this);
-                        builder.setCancelable(true);
-                        builder.setTitle("Items");
-                        builder.setMessage(buffer.toString());
-                        builder.show();
-
-
-                    }else{
+                    } else {
                         Toast.makeText(manage.this, "Select both Month & Category", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
@@ -66,6 +60,42 @@ public class manage extends AppCompatActivity {
             }
         });
     }
+
+
+    private void viewItemsList() {
+            viewItems.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DataBaseHelper dataBaseHelper = new DataBaseHelper(manage.this);
+                    List<Item> itemList = dataBaseHelper.viewData();
+                    StringBuffer stringBuffer = new StringBuffer();
+
+
+                    //  ArrayAdapter itemArrayAdapter = new ArrayAdapter<Item>(manage.this,android.R.layout.simple_expandable_list_item_1, itemList);
+                    try{
+
+                        if(!monthSelected.equals("Select Month") && !categorySelected.equals("Select Category")){
+                            for(Item item: itemList){
+                                if(item.getItemCategory().equals(categorySelected)&&item.getItemDate().equals(monthSelected)) {
+                                    stringBuffer.append(item + "\n\n");
+                                }
+                            }
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(manage.this);
+                            builder.setCancelable(true);
+                            builder.setTitle("Items");
+                            builder.setMessage(stringBuffer.toString());
+                            builder.show();
+
+                        }else{
+                            Toast.makeText(manage.this, "Select both Month & Category", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
 
     public void selectMonth() {
 
@@ -87,7 +117,7 @@ public class manage extends AppCompatActivity {
         });
     }
 
-    public void selectCategory(){
+    public void selectCategory() {
         adapter = ArrayAdapter.createFromResource(this,
                 R.array.categoriesSelection, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

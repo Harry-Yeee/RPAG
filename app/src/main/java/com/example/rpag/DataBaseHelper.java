@@ -117,6 +117,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return itemList;
     }
 
+
+
+
     public List<Category> viewCategoryData(String category, String categoryMonth){
         List<Category> categoryList = new ArrayList<>();
         List<Category> totalBudget = new ArrayList<>();
