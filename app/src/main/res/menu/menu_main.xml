@@ -9,6 +9,8 @@
         android:icon="@drawable/ic_action_image"/>
 
     <item
-        android:id="@+id/settings"
-        android:title="Setting"/>
+        android:id="@+id/addItem"
+        android:title="Add Item"
+        app:showAsAction="always"
+        />
 </menu>

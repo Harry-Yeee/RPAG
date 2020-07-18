@@ -33,6 +33,13 @@ public class manualAdd extends AppCompatActivity {
         itemMonth = findViewById(R.id.itemMonth);
         categorySpinner = findViewById(R.id.categorySpinner);
 
+        if(getIntent().hasExtra("itemName")){
+             itemNameText.setText(getIntent().getStringExtra("itemName"));
+        }
+        if(getIntent().hasExtra("itemPrice")){
+            itemPriceText.setText(getIntent().getStringExtra("itemPrice"));
+        }
+
         addData();
         viewData();
         deleteData();

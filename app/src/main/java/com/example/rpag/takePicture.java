@@ -31,6 +31,8 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.ArrayList;
+
 public class takePicture extends AppCompatActivity {
 
     EditText resultEditText;
@@ -52,7 +54,7 @@ public class takePicture extends AppCompatActivity {
         setContentView(R.layout.activity_take_picture);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setSubtitle("Click IMAGE button to get Started");
+        actionBar.setSubtitle("Click IMAGE button");
 
         resultEditText = (EditText)findViewById(R.id.resultEditText);
         imageView = (ImageView)findViewById(R.id.imageView);
@@ -75,8 +77,23 @@ public class takePicture extends AppCompatActivity {
         if(id==R.id.addImage){
             showImageImportDialog();
         }
-        if(id==R.id.settings){
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+        if(id==R.id.addItem){
+            Intent addItemIntent = new Intent(getApplicationContext(), manualAdd.class);
+            ArrayList<String> result = new ArrayList<>();
+            String[] tokens;
+            String temp;
+            try {
+                tokens = resultEditText.getText().toString().split(" ");
+                for (String k : tokens) {
+                    temp = k.replaceAll("[$]", "");
+                    result.add(temp);
+                }
+                addItemIntent.putExtra("itemName", result.get(0));
+                addItemIntent.putExtra("itemPrice", result.get(1));
+                startActivity(addItemIntent);
+            } catch (Exception e) {
+                Toast.makeText(this, "Failed to Add", Toast.LENGTH_SHORT).show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

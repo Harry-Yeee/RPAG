@@ -59,5 +59,19 @@
         <item>Miscellaneous</item>
     </string-array>
 
+    <string-array name="categoriesSelection">
+        <item>Select Category</item>
+        <item>Housing</item>
+        <item>Transportation</item>
+        <item>Food</item>
+        <item>Utilities</item>
+        <item>Healthcare</item>
+        <item>Insurance</item>
+        <item>Save_Invest_Loan</item>
+        <item>Entertainment</item>
+        <item>Personal_Spending</item>
+        <item>Miscellaneous</item>
+    </string-array>
+
 
 </resources>
