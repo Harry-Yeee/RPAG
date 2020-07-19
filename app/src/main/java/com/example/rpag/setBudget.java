@@ -80,40 +80,44 @@ public class setBudget extends AppCompatActivity {
         setBudgetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!monthSelected.equals("Select Month")) {
-                    Category category;
-                    DataBaseHelper dataBaseHelper = new DataBaseHelper(setBudget.this);
-                    Category temp = dataBaseHelper.checkCategory(categorySelected, monthSelected); //check to see if the category already exists in database
-                    double spent = 0.0;
-                    double remaining = Double.parseDouble(setBudgetText.getText().toString());
-                    double budget = 0.0;
-                    if (temp != null) {
-                        spent = temp.getCategorySpent();
-                        remaining = Double.parseDouble(setBudgetText.getText().toString()) - spent;
-                    }
-                    try {
-                        if(categorySelected.equals("Total Budget")) {
-                            double categorySpent = 0.0;
-                            List<Category> categoryList = dataBaseHelper.viewCategoryData("", monthSelected);
-                            for(int i = 0; i<categoryList.size(); i++) {
-                                categorySpent += categoryList.get(i).getCategorySpent();
-                            }
-                            category = new Category(categorySelected, Double.parseDouble(setBudgetText.getText().toString()), categorySpent,
-                                    Double.parseDouble(setBudgetText.getText().toString()) - categorySpent,
-                                    monthSelected, -1);
-                        }else {
-
-                            category = new Category(categorySelected, Double.parseDouble(setBudgetText.getText().toString()), spent, remaining,
-                                    monthSelected, -1);
+                try {
+                    if (!monthSelected.equals("Select Month")) {
+                        Category category;
+                        DataBaseHelper dataBaseHelper = new DataBaseHelper(setBudget.this);
+                        Category temp = dataBaseHelper.checkCategory(categorySelected, monthSelected); //check to see if the category already exists in database
+                        double spent = 0.0;
+                        double remaining = Double.parseDouble(setBudgetText.getText().toString());
+                        double budget = 0.0;
+                        if (temp != null) {
+                            spent = temp.getCategorySpent();
+                            remaining = Double.parseDouble(setBudgetText.getText().toString()) - spent;
                         }
-                        dataBaseHelper.insertData(category);
-                        Toast.makeText(setBudget.this, "Budget Set", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        Toast.makeText(setBudget.this, "Check Input Values", Toast.LENGTH_SHORT).show();
-                        //item = new Item("error", 0, 0, -1);
+                        try {
+                            if (categorySelected.equals("Total Budget")) {
+                                double categorySpent = 0.0;
+                                List<Category> categoryList = dataBaseHelper.viewCategoryData("", monthSelected);
+                                for (int i = 0; i < categoryList.size(); i++) {
+                                    categorySpent += categoryList.get(i).getCategorySpent();
+                                }
+                                category = new Category(categorySelected, Double.parseDouble(setBudgetText.getText().toString()), categorySpent,
+                                        Double.parseDouble(setBudgetText.getText().toString()) - categorySpent,
+                                        monthSelected, -1);
+                            } else {
+
+                                category = new Category(categorySelected, Double.parseDouble(setBudgetText.getText().toString()), spent, remaining,
+                                        monthSelected, -1);
+                            }
+                            dataBaseHelper.insertData(category);
+                            Toast.makeText(setBudget.this, "Budget Set", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(setBudget.this, "Check Input Values", Toast.LENGTH_SHORT).show();
+                            //item = new Item("error", 0, 0, -1);
+                        }
+                    } else {
+                        Toast.makeText(setBudget.this, "Select Month", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(setBudget.this, "Select Month", Toast.LENGTH_SHORT).show();
+                } catch (NumberFormatException e) {
+                    Toast.makeText(setBudget.this, "Specify Budget Amount", Toast.LENGTH_SHORT).show();
                 }
 
             }

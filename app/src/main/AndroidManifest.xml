@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".manage"></activity>
+        <activity android:name=".updateData"></activity>
+        <activity android:name=".manage" />
         <activity android:name=".takePicture" />
         <activity android:name=".viewBudgetMonth" />
         <activity android:name=".viewBudget" />

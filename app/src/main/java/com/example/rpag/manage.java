@@ -12,10 +12,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class manage extends AppCompatActivity {
+public class manage extends AppCompatActivity implements Serializable {
 
     Spinner monthSpinner, categorySpinner;
     Button viewItems, deleteItemBtn, updateItemBtn;
@@ -38,6 +39,29 @@ public class manage extends AppCompatActivity {
         selectCategory();
         viewItemsList();
         deleteItems();
+        updateItems();
+    }
+
+    private void updateItems() {
+        updateItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (!monthSelected.equals("Select Month") && !categorySelected.equals("Select Category")) {
+                        Intent updateItemsIntent = new Intent(getApplicationContext(), updateData.class);
+                        updateItemsIntent.putExtra("month", monthSelected);
+                        updateItemsIntent.putExtra("category", categorySelected);
+                        startActivity(updateItemsIntent);
+
+                    } else {
+                        Toast.makeText(manage.this, "Select both Month & Category", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
     private void deleteItems() {

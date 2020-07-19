@@ -33,7 +33,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(@Nullable Context context) {
 
-        super(context, "test6.db", null, 1);
+        super(context, "test7.db", null, 1);
     }
 
     @Override
@@ -267,6 +267,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         sqLiteDatabase.close();
         return null;
+    }
+
+
+
+    public boolean updateData(Item item) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        String id = String.valueOf(item.getItemId());
+        contentValues.put(ITEM_ID, item.getItemId());
+        contentValues.put(ITEM_NAME,item.getItemName());
+        contentValues.put(ITEM_DATE,item.getItemDate());
+        contentValues.put(ITEM_CATEGORY,item.getItemCategory());
+        contentValues.put(ITEM_PRICE, item.getItemPrice());
+        int update = sqLiteDatabase.update(ITEM_TABLE, contentValues, "ITEM_ID = ?", new String[]{id});
+        if(update == -1){
+            return false;
+        }
+        return true;
     }
 
 
