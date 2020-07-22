@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
     public static DatabaseHelper myDb;
+    public static categoryMatcher catMatch;
     EditText editName, editPrice, editDate,editTextId;
     Button btnAddData;
     Button btnviewAll;
@@ -27,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDb = new DatabaseHelper(this);
+        try {
+            catMatch = new categoryMatcher(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         editName = (EditText)findViewById(R.id.editText_name);
         editPrice = (EditText)findViewById(R.id.editText_price);
