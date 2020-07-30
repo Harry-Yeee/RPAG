@@ -81,15 +81,27 @@ public class takePicture extends AppCompatActivity {
             Intent addItemIntent = new Intent(getApplicationContext(), manualAdd.class);
             ArrayList<String> result = new ArrayList<>();
             String[] tokens;
+            StringBuilder itemNm = new StringBuilder();
+            String price = "";
             String temp;
             try {
                 tokens = resultEditText.getText().toString().split(" ");
                 for (String k : tokens) {
-                    temp = k.replaceAll("[$]", "");
+                    temp = k.replaceAll("[$]", " ");
                     result.add(temp);
                 }
-                addItemIntent.putExtra("itemName", result.get(0));
-                addItemIntent.putExtra("itemPrice", result.get(1));
+                for(int i=0; i <result.size(); i++){
+                    try{
+                        Double.parseDouble(result.get(i));
+                        price = result.get(i);
+                        break;
+                    } catch (Exception e) {
+                        itemNm.append(result.get(i) + " ");
+                    }
+                }
+                addItemIntent.putExtra("itemName", itemNm.toString());
+                addItemIntent.putExtra("itemPrice", price);
+
                 startActivity(addItemIntent);
             } catch (Exception e) {
                 Toast.makeText(this, "Failed to Add", Toast.LENGTH_SHORT).show();
@@ -234,8 +246,10 @@ public class takePicture extends AppCompatActivity {
 
                     for(int i = 0; i<items.size(); i++){
                         TextBlock myItem = items.valueAt(i);
-                        sb.append(myItem.getValue());
-                        sb.append("\n");
+                       if(!myItem.getValue().equals(" ")) {
+                            sb.append(myItem.getValue());
+                            sb.append(" ");
+                       }
 
                     }
                     resultEditText.setText(sb.toString());
