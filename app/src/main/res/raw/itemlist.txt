@@ -1,44 +1,46 @@
-Car Payment, Transportation
-Car Insurance, Transportation
-Car Warranty, Transportation
+Car payment, Transportation
+Car insurance, Transportation
+Car warranty, Transportation
 Gas, Transportation
-Public Transportation Tickets, Transportation
-Taxi Costs, Transportation
-Parking Fees, Transportation
+Public transportation tickets, Transportation
+Taxi costs, Transportation
+Parking fees, Transportation
 Tires, Transportation
 Maintenance, Transportation
-Old Change, Transportation
-Auto Repairs, Transportation
-Registration and DMV Fees, Transportation
-Gym Membership, Personal_Spending
+Oil change, Transportation
+Engine oil, Transportation
+Auto repairs, Transportation
+Registration and dmv fees, Transportation
+Gym membership, Personal_Spending
 Haircut, Personal_Spending
-Salon Services, Personal_Spending
+Salon services, Personal_Spending
 Cosmetics, Personal_Spending
 Babysitter, Personal_Spending
 Subscription, Personal_Spending
+Wrapping paper, Housing
 Rent, Housing
-Mortgage Interest, Housing
+Mortgage interest, Housing
 Mortgage, Housing
-House Tax, Housing
-Home Insurance, Housing
-Home Repairs, Housing
-Snow Removal, Housing
-Lawn Mowing, Housing
-Cleaning Supplies, Housing
+House tax, Housing
+Home insurance, Housing
+Home repairs, Housing
+Snow removal, Housing
+Lawn mowing, Housing
+Cleaning supplies, Housing
 Tools, Housing
 Advertising, Miscellaneous
-Bank Fees, Miscellaneous
-Car Expenses, Miscellaneous
-Club Dues, Miscellaneous
-Credit Card Fees, Miscellaneous
-Education and Training, Miscellaneous
-Home Office, Miscellaneous
-Tax Preparation Fee, Miscellaneous
+Bank fees, Miscellaneous
+Car expenses, Miscellaneous
+Club dues, Miscellaneous
+Credit card fees, Miscellaneous
+Education and training, Miscellaneous
+Home office, Miscellaneous
+Tax preparation fee, Miscellaneous
 Interest, Miscellaneous
-Licenses Fees, Miscellaneous
-Reparis and Maintenance, Miscellaneous
+Licenses fees, Miscellaneous
+Reparis and maintenance, Miscellaneous
 Subscriptions, Miscellaneous
-Emergency Services, Healthcare
+Emergency services, Healthcare
 Surgery, Healthcare
 X-ray, Healthcare
 Medical visit, Healthcare
@@ -47,16 +49,21 @@ Office visit, Healthcare
 Blood draw, Healthcare
 Lab work, Healthcare
 Auto insurance, Insurance
-Homeowners Insurance, Insurance
-Renters Insurance, Insurance
-Umbrella Policy, Insurance
-Health Insurance, Insurance
-Life Insurance, Insurance
-Identity Theft Protection, Insurance
+Homeowners insurance, Insurance
+Renters insurance, Insurance
+Umbrella policy, Insurance
+Health insurance, Insurance
+Life insurance, Insurance
+Identity theft protection, Insurance
+Fresh meat, Food
+Brussel sprouts, Food
+Grapes green, Food
+Peas snow, Food
+Tomatoes grape, Food
 Angelica, Food
 Savoy cabbage, Food
 Silver linden, Food
-Kiwi,Food
+Kiwi, Food
 Allium (Onion), Food
 Garden onion, Food
 Leek, Food

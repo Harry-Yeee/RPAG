@@ -28,19 +28,18 @@ public class categoryMatcher {
             // System.out.println(i);
             // i++;
         }
-        I2C.put("Vaccination", "Healthcare");
         //System.out.println(findCat("Eggs"));
     }
 
     public String findCat(String item){
 
-        //item = item.toLowerCase();
-       // item = item.substring(0, 1).toUpperCase() + item.substring(1);
+        item = item.toLowerCase();
+        item = item.substring(0, 1).toUpperCase() + item.substring(1);
 
         String cat = I2C.get(item);
 
         if(cat != null) {
-            //if (cat.equals("sil")) cat = "Saving, Invest, Loan"; // sil = Saving, Invest, Loan
+            if (cat.equals("sil")) cat = "Saving_Invest_Loan"; // sil = Saving, Invest, Loan
             return cat;
         }else {
             return "Miscellaneous";
