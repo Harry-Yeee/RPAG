@@ -49,6 +49,7 @@ public class manualAdd extends AppCompatActivity implements Serializable {
             itemPriceText.setText(getIntent().getStringExtra("itemPrice"));
         }
 
+
         if(getIntent().hasExtra("update")){
             update = true;
             idUpdate = getIntent().getIntExtra("idUpdate", 0);
@@ -180,6 +181,13 @@ public class manualAdd extends AppCompatActivity implements Serializable {
 
         int spinnerPosition = adapter.getPosition(categoryUpdate);
         categorySpinner.setSelection(spinnerPosition);
+
+        if(getIntent().hasExtra("itemCategory")){
+            String category = getIntent().getStringExtra("itemCategory");
+            spinnerPosition = adapter.getPosition(category);
+            categorySpinner.setSelection(spinnerPosition);
+        }
+
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

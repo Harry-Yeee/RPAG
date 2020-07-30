@@ -48,6 +48,8 @@ public class takePicture extends AppCompatActivity {
 
     Uri image_uri;
 
+    categoryMatcher category;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +63,12 @@ public class takePicture extends AppCompatActivity {
 
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        try {
+            category = new categoryMatcher(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -100,6 +108,8 @@ public class takePicture extends AppCompatActivity {
                     }
                 }
                 addItemIntent.putExtra("itemName", itemNm.toString());
+                String cat = category.findCat(itemNm.toString().trim());
+                addItemIntent.putExtra("itemCategory", cat);
                 addItemIntent.putExtra("itemPrice", price);
 
                 startActivity(addItemIntent);
